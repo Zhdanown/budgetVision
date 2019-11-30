@@ -7,14 +7,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 
 
-class User(AbstractUser):
-    class Meta:
-        db_table = 'users'
-        verbose_name = u'Пользователь'
-        verbose_name_plural = u'Пользователи'
+#class User(AbstractUser):
+#    class Meta:
+#        db_table = 'users'
+#        verbose_name = u'Пользователь'
+#        verbose_name_plural = u'Пользователи'
     
-    TIN = models.CharField('ИНН', max_length=12, null=True, blank=True)
-    institutes = models.ManyToManyField('Institute', related_name='user_institutes', verbose_name='Доступные организации')
+#    TIN = models.CharField('ИНН', max_length=12, null=True, blank=True)
+#    institutes = models.ManyToManyField('Institute', related_name='user_institutes', verbose_name='Доступные организации')
 
 class HackathonBase(models.Model):
     class Meta:
@@ -26,8 +26,13 @@ class HackathonDictionary(HackathonBase):
     class Meta:
         abstract = True
 
-    name = models.CharField('Наименование')
+    name = models.CharField('Наименование', max_length=255)
 
+class DocumentTypes(HackathonDictionary):
+    class Meta:
+        db_table = 'document_types'
+        verbose_name = 'Типы документов'
+        verbose_name_plural = 'Типы документов'
 
 
 class Document(HackathonBase):
@@ -36,7 +41,7 @@ class Document(HackathonBase):
         verbose_name = 'Документы'
         verbose_name_plural = 'Документы'
 
-    type = models.ForeignKey('','Тип документа')
+    type = models.ForeignKey(DocumentTypes, verbose_name = 'Тип документа', on_delete=models.PROTECT)
     number = models.CharField('Номер', max_length=255)
     creation_date = models.DateTimeField('Дата создания')
     approval_date = models.DateTimeField('Дата утверждения')
@@ -69,8 +74,9 @@ class BaseProcess(HackathonDictionary):
         db_table = 'base_process'
         verbose_name = 'Шаблон процесса'
         verbose_name_plural = 'Шаблон процесса'
+        verbose_name_plural = 'Шаблон процесса'
 
-    parent_process = models.ForeignKey('BaseProcess', verbose_name='Родитель', null=True)
+    parent_process = models.ForeignKey('BaseProcess', verbose_name='Родитель', null=True, on_delete=models.PROTECT)
 
 
 class Process(HackathonBase):
@@ -80,19 +86,19 @@ class Process(HackathonBase):
         verbose_name_plural = 'Процесс'
 
     process = models.ForeignKey('BaseProcess', null=False, on_delete=models.PROTECT)
-    from_institute = models.ForeignKey(Institute, verbose_name='Отправитель')
-    to_institute = models.ForeignKey(Institute, verbose_name='Получатель')
-    document_type = models.ForeignKey('document_types')
+    from_institute = models.ForeignKey(Institute, verbose_name='Отправитель', on_delete=models.PROTECT, related_name = 'institute_from')
+    to_institute = models.ForeignKey(Institute, verbose_name='Получатель', on_delete=models.PROTECT,  related_name = 'institute_to')
+    document_type = models.ForeignKey(DocumentTypes, verbose_name = 'Тип документа',  on_delete=models.PROTECT)
     expiration_date = models.DateField()
     
 
 
 
-class DocumentTypes(HackathonDictionary):
-    class Meta:
-        db_table = 'document_types'
-        verbose_name = 'Типы документов'
-        verbose_name_plural = 'Типы документов'
+#class DocumentTypes(HackathonDictionary):
+#    class Meta:
+#        db_table = 'document_types'
+#        verbose_name = 'Типы документов'
+#        verbose_name_plural = 'Типы документов'
 
 
 
