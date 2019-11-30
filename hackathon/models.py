@@ -3,6 +3,9 @@ Definition of models.
 """
 
 from django.db import models
+from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+
 
 class User(AbstractUser):
     class Meta:
@@ -33,7 +36,7 @@ class Document(HackathonBase):
         verbose_name = 'Документы'
         verbose_name_plural = 'Документы'
 
-    type = models.CharField('Тип документа', max_length=255)
+    type = models.ForeignKey('','Тип документа')
     number = models.CharField('Номер', max_length=255)
     creation_date = models.DateTimeField('Дата создания')
     approval_date = models.DateTimeField('Дата утверждения')
@@ -79,6 +82,8 @@ class Process(HackathonBase):
     process = models.ForeignKey('BaseProcess', null=False, on_delete=models.PROTECT)
     from_institute = models.ForeignKey(Institute, verbose_name='Отправитель')
     to_institute = models.ForeignKey(Institute, verbose_name='Получатель')
+    document_type = models.ForeignKey('document_types')
+    expiration_date = models.DateField()
     
 
 
