@@ -11,7 +11,7 @@ class HackathonBase(models.Model):
     class Meta:
         abstract = True
 
-    creation_time = models.DateTimeField('Дата создания')
+    creation_time = models.DateTimeField('Дата создания', auto_now_add=True)
 
 class HackathonDictionary(HackathonBase):
     class Meta:
@@ -26,6 +26,9 @@ class DocumentTypes(HackathonDictionary):
         verbose_name = 'Типы документов'
         verbose_name_plural = 'Типы документов'
 
+    def __str__(self):
+        return self.name
+
 
 class Document(HackathonBase):
     class Meta:
@@ -35,9 +38,12 @@ class Document(HackathonBase):
 
     type = models.ForeignKey(DocumentTypes, verbose_name = 'Тип документа', on_delete=models.PROTECT)
     number = models.CharField('Номер', max_length=255)
-    creation_date = models.DateTimeField('Дата создания')
-    approval_date = models.DateTimeField('Дата утверждения')
-    institute = models.ForeignKey('Institute',on_delete=models.PROTECT, verbose_name='Организация')
+    creation_date = models.DateTimeField('Дата создания', null=True, blank=True)
+    approval_date = models.DateTimeField('Дата утверждения', null=True, blank=True)
+    institute = models.ForeignKey('Institute', on_delete=models.PROTECT, verbose_name='Организация')
+
+    def __str__(self):
+        return '%s (%s)' % (self.type.name, self.number)
 
 
 class Institute(HackathonDictionary):
@@ -51,6 +57,9 @@ class Institute(HackathonDictionary):
     founder = models.ForeignKey('Founder', on_delete=models.SET_NULL, verbose_name = 'Учредитель', null=True, blank=True)
     institute_type = models.CharField(max_length=255, choices = INSTITUTE_TYPE_CHOICES)
 
+    def __str__(self):
+        return self.name
+
 
 class Founder(HackathonDictionary):
     class Meta:
@@ -60,6 +69,9 @@ class Founder(HackathonDictionary):
     
     TIN = models.CharField('ИНН', max_length=12, blank=True)
 
+    def __str__(self):
+        return self.name
+
 
 class BaseProcess(HackathonDictionary):
     class Meta:
@@ -68,7 +80,10 @@ class BaseProcess(HackathonDictionary):
         verbose_name_plural = 'Шаблон процесса'
         verbose_name_plural = 'Шаблон процесса'
 
-    parent_process = models.ForeignKey('BaseProcess', verbose_name='Родитель', null=True, on_delete=models.PROTECT)
+    parent_process = models.ForeignKey('BaseProcess', verbose_name='Родитель', blank=True, null=True, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.name
 
 
 class Process(HackathonBase):
@@ -82,6 +97,9 @@ class Process(HackathonBase):
     to_institute = models.ForeignKey(Institute, verbose_name='Получатель', on_delete=models.PROTECT,  related_name = 'institute_to')
     document_type = models.ForeignKey(DocumentTypes, verbose_name = 'Тип документа',  on_delete=models.PROTECT)
     expiration_date = models.DateField()
+
+    def __str__(self):
+        return self.process.name
     
 
 class UserInstitutes(HackathonBase):
@@ -93,11 +111,5 @@ class UserInstitutes(HackathonBase):
     TIN = models.CharField('ИНН', max_length=12, null=True, blank=True)
     institutes = models.ManyToManyField('Institute', verbose_name='Доступные организации')
 
-
-
-
-
-
-
-
-
+    def __str__(self):
+        return self.user.username
