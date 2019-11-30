@@ -7,15 +7,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 
 
-#class User(AbstractUser):
-#    class Meta:
-#        db_table = 'users'
-#        verbose_name = u'Пользователь'
-#        verbose_name_plural = u'Пользователи'
-    
-#    TIN = models.CharField('ИНН', max_length=12, null=True, blank=True)
-#    institutes = models.ManyToManyField('Institute', related_name='user_institutes', verbose_name='Доступные организации')
-
 class HackathonBase(models.Model):
     class Meta:
         abstract = True
@@ -27,6 +18,7 @@ class HackathonDictionary(HackathonBase):
         abstract = True
 
     name = models.CharField('Наименование', max_length=255)
+
 
 class DocumentTypes(HackathonDictionary):
     class Meta:
@@ -92,13 +84,14 @@ class Process(HackathonBase):
     expiration_date = models.DateField()
     
 
-
-
-#class DocumentTypes(HackathonDictionary):
-#    class Meta:
-#        db_table = 'document_types'
-#        verbose_name = 'Типы документов'
-#        verbose_name_plural = 'Типы документов'
+class UserInstitutes(HackathonBase):
+    class Meta:
+        db_table = 'users_institutes'
+        verbose_name = u'Пользователь'
+        verbose_name_plural = u'Пользователи'
+    
+    TIN = models.CharField('ИНН', max_length=12, null=True, blank=True)
+    institutes = models.ManyToManyField('Institute', verbose_name='Доступные организации')
 
 
 
