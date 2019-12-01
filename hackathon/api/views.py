@@ -10,7 +10,7 @@ from rest_framework.mixins import DestroyModelMixin
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.exceptions import NotFound, bad_request
 from rest_framework.exceptions import AuthenticationFailed
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, get_list_or_404, redirect
 from django.utils import timezone
 from django.urls import reverse
 from django.db.models import Q
@@ -36,3 +36,16 @@ class DocumentTypeList(generics.ListAPIView):
 
     def get_queryset(self):
         return DocumentTypes.objects.all()
+
+class UserInstituntes(generics.RetrieveAPIView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = UserInstitutesSerializer
+    lookup_field = 'user__pk'
+    queryset = UserInstitutes.objects.all()
+
+
+#class ProcessList(APIView):
+#    permission_classes = (permissions.AllowAny,)
+#    serializer_class = UserInstitutesSerializer
+#    lookup_field = 'user__pk'
+#    queryset = UserInstitutes.objects.all()
