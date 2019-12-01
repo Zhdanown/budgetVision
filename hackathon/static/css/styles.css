@@ -70,7 +70,10 @@
     background: red;
 }
 .sidepanel .info {
-    background: lightblue;
+    background: #75C0E0;
+}
+.sidepanel .vedomstvo {
+    background: orange;
 }
 
 .kanban {
@@ -102,8 +105,8 @@
 .column .cards-wrapper {
     height: 100%;
     overflow: auto;
-    padding-right: 17px;
-    margin-right: -34px;
+    /* padding-right: 17px;
+    margin-right: -34px; */
 }
 
 .card {
@@ -127,7 +130,7 @@
 .card .danger {
     color: red;
     position: absolute;
-    right: -7px;
+    right: 0;
     bottom: -7px;
 
 }
