@@ -101,6 +101,7 @@
       <label>
         <input type="checkbox" ng-checked="doc_type.documents.length !== 0"/>
         <span>Отправить отчет по форме 2 в министерство образования</span>
+        <a ng-if="doc_type.template_file" href="[[doc_type.template_file]]">Скачать шаблон</a>
       </label>
     </p>
 
