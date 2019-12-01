@@ -47,6 +47,7 @@ class DocumentTypeList(generics.ListAPIView):
     def get_queryset(self):
         return DocumentTypes.objects.all()
 
+
 class UserInstituntesView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = UserInstitutesSerializer
@@ -63,7 +64,7 @@ class ProcessListView(generics.ListAPIView):
 
         data = self.serializer(processes, many=True).data
         response_data = []
-        
+
         for process in data:
 
             dict_process = dict(process)
@@ -72,11 +73,11 @@ class ProcessListView(generics.ListAPIView):
 
                 doc_type = dict(dict_process['document_type'][i])
                 doctype_pk = doc_type['id']
-                documents = Document.objects.filter(type = doctype_pk, institute = dict_process['from_institute'], to_institute = dict_process['to_institute'])
+
+                documents = Document.objects.filter(type = doctype_pk, institute = dict(dict_process['from_institute'])['id'], to_institute = dict(dict_process['to_institute'])['id'])
                 doc_type['documents'] = DocumentSerializer(documents, many=True).data
                 dict_process['document_type'][i] = doc_type
                 response_data.append(dict_process)
-
 
         return Response(data)
 

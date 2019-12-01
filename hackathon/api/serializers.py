@@ -39,8 +39,8 @@ class DocumentSerializer(serializers.ModelSerializer):
 class ProcessSerializer(serializers.ModelSerializer):
 
     process = BaseProcessSerializer()
-    #from_institute = InstituteSerializer()
-    #to_institute = InstituteSerializer()
+    from_institute = InstituteSerializer(many=False)
+    to_institute = InstituteSerializer(many=False)
     period = PeriodSerializer()
     document_type = DocumentTypeSerializer(many=True)
 
