@@ -58,5 +58,6 @@ app.controller("MainController", function($scope) {
       $scope.selectedCard = card;
   }
 
+
   console.log("main controller");
 });

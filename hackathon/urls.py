@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/', include('hackathon.api.urls')),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^accounts/', include('allauth.urls')),
+    
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
