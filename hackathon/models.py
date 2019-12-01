@@ -53,24 +53,13 @@ class Institute(HackathonDictionary):
                              ('PUBLIC_INSTITUTE', 'Казенное учреждение'),
                              ('GOVERNMENT_INSTITUTE', 'Государственное унитарное предприятие'),
                              ]
+
     TIN = models.CharField('ИНН учреждения', max_length=12, blank=True)
     founder = models.ForeignKey('Institute', on_delete=models.SET_NULL, verbose_name = 'Учредитель', null=True, blank=True)
     institute_type = models.CharField(max_length=255, choices = INSTITUTE_TYPE_CHOICES)
 
     def __str__(self):
         return self.name
-
-
-#class Founder(HackathonDictionary):
-#    class Meta:
-#        db_table = 'founder'
-#        verbose_name = 'Учредитель'
-#        verbose_name_plural = 'Учредитель'
-    
-#    TIN = models.CharField('ИНН', max_length=12, blank=True)
-
-#    def __str__(self):
-#        return self.name
 
 
 class BaseProcess(HackathonDictionary):
