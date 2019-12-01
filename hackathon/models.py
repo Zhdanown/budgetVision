@@ -1,7 +1,3 @@
-"""
-Definition of models.
-"""
-
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
@@ -52,25 +48,29 @@ class Institute(HackathonDictionary):
         verbose_name = 'Учреждение'
         verbose_name_plural = 'Учреждение'
 
-    INSTITUTE_TYPE_CHOICES = []
+    INSTITUTE_TYPE_CHOICES = [('BUDJET_INSTITUTE', 'Бюджетная организация'),
+                             ('AUTONOMOUS_INSTITUTE', 'Автономная организация'),
+                             ('PUBLIC_INSTITUTE', 'Казенное учреждение'),
+                             ('GOVERNMENT_INSTITUTE', 'Государственное унитарное предприятие'),
+                             ]
     TIN = models.CharField('ИНН учреждения', max_length=12, blank=True)
-    founder = models.ForeignKey('Founder', on_delete=models.SET_NULL, verbose_name = 'Учредитель', null=True, blank=True)
+    founder = models.ForeignKey('Institute', on_delete=models.SET_NULL, verbose_name = 'Учредитель', null=True, blank=True)
     institute_type = models.CharField(max_length=255, choices = INSTITUTE_TYPE_CHOICES)
 
     def __str__(self):
         return self.name
 
 
-class Founder(HackathonDictionary):
-    class Meta:
-        db_table = 'founder'
-        verbose_name = 'Учредитель'
-        verbose_name_plural = 'Учредитель'
+#class Founder(HackathonDictionary):
+#    class Meta:
+#        db_table = 'founder'
+#        verbose_name = 'Учредитель'
+#        verbose_name_plural = 'Учредитель'
     
-    TIN = models.CharField('ИНН', max_length=12, blank=True)
+#    TIN = models.CharField('ИНН', max_length=12, blank=True)
 
-    def __str__(self):
-        return self.name
+#    def __str__(self):
+#        return self.name
 
 
 class BaseProcess(HackathonDictionary):
@@ -96,7 +96,9 @@ class Process(HackathonBase):
     from_institute = models.ForeignKey(Institute, verbose_name='Отправитель', on_delete=models.PROTECT, related_name = 'institute_from')
     to_institute = models.ForeignKey(Institute, verbose_name='Получатель', on_delete=models.PROTECT,  related_name = 'institute_to')
     document_type = models.ForeignKey(DocumentTypes, verbose_name = 'Тип документа',  on_delete=models.PROTECT)
-    expiration_date = models.DateField()
+    period = models.ForeignKey('Period', verbose_name='Период планирования', on_delete=models.SET_NULL, null=True, default=None)
+    start_date = models.DateField(null=True, default=None)
+    expiration_date = models.DateField(null=True, default=None)
 
     def __str__(self):
         return self.process.name
@@ -105,11 +107,27 @@ class Process(HackathonBase):
 class UserInstitutes(HackathonBase):
     class Meta:
         db_table = 'users_institutes'
-        verbose_name = u'Пользователь'
-        verbose_name_plural = u'Пользователи'
+        verbose_name = u'Организации пользователя'
+        verbose_name_plural = u'Организации пользователя'
     
-    TIN = models.CharField('ИНН', max_length=12, null=True, blank=True)
+    user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE, null=True)
     institutes = models.ManyToManyField('Institute', verbose_name='Доступные организации')
 
     def __str__(self):
         return self.user.username
+
+
+class Period(HackathonDictionary):
+    class Meta:
+        db_table = 'periods'
+        verbose_name = 'Периоды'
+        verbose_name_plural = 'Периоды'
+    
+    start_date = models.DateField(null=True, default=None)
+    expiration_date = models.DateField(null=True, default=None)
+
+    def __str__(self):
+        return self.name
+
+
+

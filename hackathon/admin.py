@@ -8,7 +8,7 @@ from .models import *
 admin.site.register(DocumentTypes)
 admin.site.register(Document)
 admin.site.register(Institute)
-admin.site.register(Founder)
+#admin.site.register(Founder)
 admin.site.register(BaseProcess)
 admin.site.register(Process)
 admin.site.register(UserInstitutes)
