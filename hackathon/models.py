@@ -99,7 +99,7 @@ class Process(HackathonBase):
     expiration_date = models.DateField(null=True, default=None)
     law_base = models.TextField('Законное основание', null=False, blank=False)
     description = models.TextField("Описание процесса", null=True, blank=True, default='')
-    status = models.CharField(max_length=255, choices = STATUS_CHOICES, null=True, blank=True)
+    status = models.CharField(max_length=255, choices = STATUS_CHOICES, null=True, blank=True, default='IN_PROCESS')
 
     def __str__(self):
         return self.process.name
