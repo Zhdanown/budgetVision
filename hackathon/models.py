@@ -59,6 +59,7 @@ class Institute(HackathonDictionary):
     TIN = models.CharField('ИНН учреждения', max_length=12, blank=True)
     founder = models.ForeignKey('Institute', on_delete=models.SET_NULL, verbose_name = 'Родительское ведомство', null=True, blank=True)
     institute_type = models.CharField(max_length=255, choices = INSTITUTE_TYPE_CHOICES)
+    description = models.TextField("Описание учреждения", null=True, blank=True, default='')
 
     def __str__(self):
         return self.name
@@ -69,7 +70,7 @@ class BaseProcess(HackathonDictionary):
         db_table = 'base_process'
         verbose_name = 'Шаблон процесса'
         verbose_name_plural = 'Шаблон процесса'
-        verbose_name_plural = 'Шаблон процесса'
+        verbose_name_plural = 'Шаблоны процесса'
 
     parent_process = models.ForeignKey('BaseProcess', verbose_name='Родитель', blank=True, null=True, on_delete=models.PROTECT)
     description = models.TextField("Описание процесса", null=True, blank=True, default='')
@@ -82,7 +83,7 @@ class Process(HackathonBase):
     class Meta:
         db_table = 'process'
         verbose_name = 'Процесс'
-        verbose_name_plural = 'Процесс'
+        verbose_name_plural = 'Процесы'
 
     process = models.ForeignKey('BaseProcess', null=False, on_delete=models.PROTECT)
     from_institute = models.ForeignKey(Institute, verbose_name='Отправитель', on_delete=models.PROTECT, related_name = 'institute_from')
@@ -91,8 +92,8 @@ class Process(HackathonBase):
     period = models.ForeignKey('Period', verbose_name='Период планирования', on_delete=models.SET_NULL, null=True, default=None)
     start_date = models.DateField(null=True, default=None)
     expiration_date = models.DateField(null=True, default=None)
-    law_base = models.TextField('Законное основание', null=False, blank=False) 
-    description = models.TextField("Описание процесса", null=True, blank=True, default='')   
+    law_base = models.TextField('Законное основание', null=False, blank=False)
+    description = models.TextField("Описание процесса", null=True, blank=True, default='')
 
     def __str__(self):
         return self.process.name
@@ -106,6 +107,7 @@ class UserInstitutes(HackathonBase):
     
     user = models.OneToOneField(User, verbose_name='Пользователь', on_delete=models.CASCADE, null=True)
     institutes = models.ManyToManyField('Institute', verbose_name='Доступные организации')
+    description = models.TextField("Описание процесса", null=True, blank=True, default='')
 
     def __str__(self):
         return self.user.username
@@ -122,6 +124,3 @@ class Period(HackathonDictionary):
 
     def __str__(self):
         return self.name
-
-
-
