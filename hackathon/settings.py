@@ -145,6 +145,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'static')
 
+UPLOAD_ROOT = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'upload')
+UPLOAD_URL = '/upload/'
+
 SITE_ID = 1
 
 ACCOUNT_LOGOUT_REDIRECT_URL ="/"
