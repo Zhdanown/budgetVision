@@ -1,0 +1,105 @@
+.angular-ui-tree-handle {
+    cursor: pointer;
+}
+
+.card-page {
+    padding: 1rem;
+}
+
+.card-page .main-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.working-area {
+    display: flex;
+}
+
+
+.sidepanel {
+    width: 220px;
+    padding: .5rem 0;
+    color: white;
+}
+.sidepanel > div {
+    padding: .5rem;
+    margin-bottom: .5rem;
+}
+.sidepanel .label {
+    font-weight: 500;
+}
+.sidepanel .warning {
+    background: red;
+}
+.sidepanel .info {
+    background: lightblue;
+}
+
+.kanban {
+    height: calc(100vh - 100px);
+    padding: 0 .5rem;
+    flex: 1;
+    display: flex;
+}
+
+.column {
+    display: inline-block;
+    height: 100%;
+    width: 30%;
+    margin: .5rem;
+    padding: 1rem;
+    background: #eee;
+    border-radius: .25rem;
+    flex: 1;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.column .column-header h6 {
+    font-weight: 500;
+}
+
+.column .cards-wrapper {
+    height: 100%;
+    overflow: auto;
+    padding-right: 17px;
+    margin-right: -34px;
+}
+
+.card.danger::after {
+    content: "!";
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    bottom: -10px;
+    right: -10px;
+    background: red;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    color: white;
+}
+
+.card .danger {
+    color: red;
+    position: absolute;
+    right: -7px;
+    bottom: -7px;
+
+}
+
+.card .card-title {
+    font-size: 16px;
+    padding: .5rem;
+}
+.card .card-title .mail {
+    float: right;
+    margin-right
+}
+
+.card .card-content {
+    padding: .5rem;
+}
