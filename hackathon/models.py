@@ -22,6 +22,8 @@ class DocumentTypes(HackathonDictionary):
         verbose_name = 'Типы документов'
         verbose_name_plural = 'Типы документов'
 
+    description = models.TextField('Описание типа документа', null=True, blank=False, )
+
     def __str__(self):
         return self.name
 
@@ -45,8 +47,8 @@ class Document(HackathonBase):
 class Institute(HackathonDictionary):
     class Meta:
         db_table = 'institute'
-        verbose_name = 'Учреждение'
-        verbose_name_plural = 'Учреждение'
+        verbose_name = 'Организация'
+        verbose_name_plural = 'Организации'
 
     INSTITUTE_TYPE_CHOICES = [('BUDJET_INSTITUTE', 'Бюджетная организация'),
                              ('AUTONOMOUS_INSTITUTE', 'Автономная организация'),
@@ -54,7 +56,7 @@ class Institute(HackathonDictionary):
                              ('GOVERNMENT_INSTITUTE', 'Государственное унитарное предприятие'),
                              ]
     TIN = models.CharField('ИНН учреждения', max_length=12, blank=True)
-    founder = models.ForeignKey('Institute', on_delete=models.SET_NULL, verbose_name = 'Учредитель', null=True, blank=True)
+    founder = models.ForeignKey('Institute', on_delete=models.SET_NULL, verbose_name = 'Родительское ведомство', null=True, blank=True)
     institute_type = models.CharField(max_length=255, choices = INSTITUTE_TYPE_CHOICES)
 
     def __str__(self):
@@ -95,10 +97,11 @@ class Process(HackathonBase):
     process = models.ForeignKey('BaseProcess', null=False, on_delete=models.PROTECT)
     from_institute = models.ForeignKey(Institute, verbose_name='Отправитель', on_delete=models.PROTECT, related_name = 'institute_from')
     to_institute = models.ForeignKey(Institute, verbose_name='Получатель', on_delete=models.PROTECT,  related_name = 'institute_to')
-    document_type = models.ForeignKey(DocumentTypes, verbose_name = 'Тип документа',  on_delete=models.PROTECT)
+    document_type = models.ManyToMany(DocumentTypes, verbose_name = 'Тип документа',  on_delete=models.PROTECT)
     period = models.ForeignKey('Period', verbose_name='Период планирования', on_delete=models.SET_NULL, null=True, default=None)
     start_date = models.DateField(null=True, default=None)
     expiration_date = models.DateField(null=True, default=None)
+    law_base = models.TextField('Законное основание', null=False, blank=False)
 
     def __str__(self):
         return self.process.name
