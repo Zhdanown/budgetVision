@@ -17,7 +17,18 @@
 
 ***
 ### Структура проекта
-> BUDGETVISION (Решение)
->> HACKATHON (Django Приложение)
->>> api (RestAPI)
->>>> views.py (api методы)
+> HACKATHON (Django Приложение)
+>>  api (RestAPI)
+>>>		views.py (api методы)
+>>>		urls.py (маршрутизация)
+>>>		serializers.py (Классы сериализаторы для моделей данных проекта)
+>>  api (RestAPI)
+>>>		js/app/ (Angular JS приложение)
+>>  css (Стили на material)
+>>  templates (HTML Шаблоны страниц. Реализовано через layout и views)
+>>>		account (Раширили шаблоны allauth)
+>>  admin.py (файл настройки панели администратора)
+>>  models.py (файл моделей данных)
+>>  settings.py (настройки проекта)
+>>  views.py (представления данных)
+>>  urls.py (настройки маршрутизации проектов)
