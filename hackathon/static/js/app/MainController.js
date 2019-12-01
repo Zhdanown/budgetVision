@@ -1,6 +1,6 @@
 var app = angular.module("main-ctrl", []);
 
-app.controller("MainController", function($scope) {
+app.controller("MainController", function($scope, GetUser, Processes, Tasks) {
   $scope.data = [
     {
       id: 1,
@@ -58,6 +58,14 @@ app.controller("MainController", function($scope) {
       $scope.selectedCard = card;
   }
 
+  /* Get User Organizations */
+  GetUser.get({ pk: 1 }, res => {
+    console.log(res);
+  })
+
+  Processes.query({}, res => {
+    console.log(res);
+  })
 
   console.log("main controller");
 });
