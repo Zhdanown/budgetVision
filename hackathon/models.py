@@ -86,7 +86,7 @@ class Process(HackathonBase):
     process = models.ForeignKey('BaseProcess', null=False, on_delete=models.PROTECT)
     from_institute = models.ForeignKey(Institute, verbose_name='Отправитель', on_delete=models.PROTECT, related_name = 'institute_from')
     to_institute = models.ForeignKey(Institute, verbose_name='Получатель', on_delete=models.PROTECT,  related_name = 'institute_to')
-    document_type = models.ManyToMany(DocumentTypes, verbose_name = 'Тип документа',  on_delete=models.PROTECT)
+    document_type = models.ManyToManyField(DocumentTypes, verbose_name = 'Тип документа')
     period = models.ForeignKey('Period', verbose_name='Период планирования', on_delete=models.SET_NULL, null=True, default=None)
     start_date = models.DateField(null=True, default=None)
     expiration_date = models.DateField(null=True, default=None)
