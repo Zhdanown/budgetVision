@@ -86,6 +86,10 @@ class Process(HackathonBase):
         verbose_name = 'Процесс'
         verbose_name_plural = 'Процесы'
 
+    STATUS_CHOICES = [('DONE', 'Сделано'),
+                    ('OVERDUE', 'Просрочены'),
+                    ('IN_PROCESS', 'Нужно сделать'),]
+
     process = models.ForeignKey('BaseProcess', null=False, on_delete=models.PROTECT)
     from_institute = models.ForeignKey(Institute, verbose_name='Отправитель', on_delete=models.PROTECT, related_name = 'institute_from')
     to_institute = models.ForeignKey(Institute, verbose_name='Получатель', on_delete=models.PROTECT,  related_name = 'institute_to')
@@ -95,6 +99,7 @@ class Process(HackathonBase):
     expiration_date = models.DateField(null=True, default=None)
     law_base = models.TextField('Законное основание', null=False, blank=False)
     description = models.TextField("Описание процесса", null=True, blank=True, default='')
+    status = models.CharField(max_length=255, choices = STATUS_CHOICES, null=True, blank=True)
 
     def __str__(self):
         return self.process.name
