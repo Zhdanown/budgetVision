@@ -56,7 +56,30 @@ class UserInstituntesView(generics.RetrieveAPIView):
 
 class ProcessListView(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
-    serializer_class = ProcessSerializer
+    serializer = ProcessSerializer
+
+    def get(self, request):
+        processes = self.get_queryset()
+
+        data = self.serializer(processes, many=True).data
+        response_data = []
+        
+        for process in data:
+
+            dict_process = dict(process)
+
+            for i in range(len(dict_process['document_type'])):
+
+                doc_type = dict(dict_process['document_type'][i])
+                doctype_pk = doc_type['id']
+                documents = Document.objects.filter(type = doctype_pk, institute = dict_process['from_institute'], to_institute = dict_process['to_institute'])
+                doc_type['documents'] = DocumentSerializer(documents, many=True).data
+                dict_process['document_type'][i] = doc_type
+                response_data.append(dict_process)
+
+
+        return Response(data)
+
 
     def get_queryset(self):
         institutes = get_nested_institutes(self.request.user)

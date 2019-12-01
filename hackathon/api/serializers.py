@@ -9,13 +9,42 @@ class DocumentTypeSerializer(serializers.ModelSerializer):
         model = DocumentTypes
         fields = '__all__'
 
+class InstituteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Institute
+        fields = '__all__'
+
+class PeriodSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Period
+        fields = '__all__'
+
 
 class UserInstitutesSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserInstitutes
         fields = '__all__'
 
+class BaseProcessSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BaseProcess
+        fields = '__all__'
+
+class DocumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Document
+        fields = '__all__'
+
+
 class ProcessSerializer(serializers.ModelSerializer):
+
+    process = BaseProcessSerializer()
+    #from_institute = InstituteSerializer()
+    #to_institute = InstituteSerializer()
+    period = PeriodSerializer()
+    document_type = DocumentTypeSerializer(many=True)
+
     class Meta:
         model = Process
         fields = '__all__'
+
