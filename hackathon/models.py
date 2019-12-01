@@ -2,6 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 
+from hackathon.settings import UPLOAD_ROOT, UPLOAD_URL
+from django.core.files.storage import FileSystemStorage
+
+# upload settings
+upload_storage = FileSystemStorage(location=UPLOAD_ROOT, base_url=UPLOAD_URL)
+def upload_to_path(instance, filename):
+    return  'doc_template_{%s}/{%s}' % (instance.id, filename)
 
 class HackathonBase(models.Model):
     class Meta:
@@ -23,6 +30,7 @@ class DocumentTypes(HackathonDictionary):
         verbose_name_plural = 'Типы документов'
 
     description = models.TextField('Описание типа документа', null=True, blank=False, )
+    template_file = models.FileField('Шаблон документа', null=True, upload_to=upload_to_path, storage=upload_storage)
 
     def __str__(self):
         return self.name
