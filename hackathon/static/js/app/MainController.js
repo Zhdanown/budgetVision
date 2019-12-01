@@ -56,7 +56,17 @@ app.controller("MainController", function($scope, GetUser, Processes, Tasks) {
 
   // $scope.currentUser = GetUser.query()
 
-  $scope.processes = Processes.query();
+  Processes.query().$promise.then(res => {
+    $scope.processes = res;
+    
+    setTimeout(() => {
+      var tooltips = document.querySelectorAll('.tooltipped');
+      var instances = M.Tooltip.init(tooltips, {
+        // html: "<div style='width: 200px'></div>"
+      });
+    }, 200)
+    
+  });
   
     
   $scope.openCard = function (card) {

@@ -11,5 +11,7 @@
     var dropdown = document.querySelectorAll('.dropdown-trigger');
     var dropdownInstances = M.Dropdown.init(dropdown, {coverTrigger: false});
 
+    
+
   });
 

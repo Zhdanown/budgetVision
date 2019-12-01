@@ -39,9 +39,9 @@
 
 <div class="periods">
   <ul>
-    <li><a href="sass.html">Предыдущий период</a></li>
-    <li><a href="sass.html">Текущий период</a></li>
-    <li><a href="sass.html">Следующий период</a></li>
+    <li><a href="#!">Предыдущий период</a></li>
+    <li class="active"><a href="#!">Текущий период</a></li>
+    <li><a href="#!">Следующий период</a></li>
     <li class="right">
       <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large">
         <i class="material-icons left">menu</i>
@@ -194,11 +194,14 @@
             <p>
               [[process.description]]
             </p>
+          
           </div>
           <i
             ng-if="$index === 0"
-            class="fas fa-lg fa-exclamation-circle danger"
+            class="fas fa-lg fa-exclamation-circle danger tooltipped"
+             data-position="bottom" data-tooltip="Этот документ готовится в среднем 5 дней, обратите внимание, чтобы вовремя начать подготовку"
           ></i>
+
         </div>
       </div>
     </div>

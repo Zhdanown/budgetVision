@@ -15,6 +15,9 @@
 .periods {
     margin-bottom: 1rem;
 }
+.periods .active {
+    background: rgba(0,0,0,0.1);
+}
 
 .periods ul {
     background: #eee;
