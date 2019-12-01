@@ -91,7 +91,7 @@
     <div class="main-info">
       <span class="date">[[selectedCard.expiration_date]]</span>
       <span>на основании [[selectedCard.law_base]]</span>
-      <span><i class="far fa-check-square"></i> 1/3</span>
+      <span><i class="far fa-check-square"></i> [[getDocumentsCount(selectedCard.document_type)]]/[[selectedCard.document_type.length]]</span>
     </div>
     <h6>
       [[selectedCard.description]]
@@ -103,6 +103,14 @@
         <span>Отправить отчет по форме 2 в министерство образования</span>
       </label>
     </p>
+
+    <div class="where-from-to">
+      <p class="center">[[selectedCard.from_institute.name]]</p>
+      <div class="center">
+        <i class="material-icons">arrow_downward</i>
+      </div>
+      <p class="center">[[selectedCard.to_institute.name]]</p>
+    </div>
     <!-- <p>
       <label>
         <input type="checkbox" />
@@ -180,6 +188,7 @@
             <span class="mail">
               <i class="far fa-check-square"></i> [[getDocumentsCount(process.document_type)]]/[[process.document_type.length]]
             </span>
+            <span class="to-institute">[[process.to_institute.name]]</span>
           </div>
           <div class="card-content">
             <p>

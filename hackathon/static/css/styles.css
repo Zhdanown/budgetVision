@@ -47,6 +47,13 @@
     justify-content: space-between;
 }
 
+.card-page .where-from-to p {
+    font-weight: 500;
+    background: #eee;
+    border-radius: 4px;
+    padding: .5rem;
+}
+
 .working-area {
     display: flex;
     width: 100%;
@@ -142,6 +149,11 @@
 .card .card-title .mail {
     float: right;
     margin-right;
+}
+
+.card .to-institute {
+    font-weight: 500;
+    display: block;
 }
 
 .card .card-content {
