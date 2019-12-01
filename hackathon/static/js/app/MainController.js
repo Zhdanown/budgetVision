@@ -84,9 +84,10 @@ app.controller("MainController", function($scope, GetUser, Processes, Tasks) {
   // })
 
   $scope.getDocumentsCount = function (doc_types) {
-    return doc_types.reduce((acc, doc_type) => {
-      return acc += doc_type.documents.length;
-    }, 0)
+    if (doc_types) return doc_types.reduce((acc, doc_type) => {
+        return acc += doc_type.documents.length;
+      }, 0);
+    else return 0;
   }
 
   console.log("main controller");
