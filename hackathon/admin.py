@@ -14,13 +14,13 @@ admin.site.register(Period)
 # расширение модели процесса
 class BaseProcessInline(admin.StackedInline):
     model = BaseProcess
-    verbose_name_plural = 'Родительский процесс'
+    verbose_name_plural = 'Дочерние процессы'
     extra = 1
 
 
 class InstituteInline(admin.StackedInline):
     model = Institute
-    verbose_name_plural = 'Родительская организация(учрездение)'
+    verbose_name_plural = 'Дочерние организации(учреждения)'
     extra = 1
 
 
@@ -35,3 +35,10 @@ class ProcessAdmin(admin.ModelAdmin):
     list_display = ('process', 'from_institute', 'to_institute',)
     search_fields = ['process',]
 admin.site.register(Process, ProcessAdmin)
+
+
+class InstituteAdmin(admin.ModelAdmin):
+    list_display = ('name', 'founder',)
+    search_fields = ['name',]
+    inlines = (InstituteInline,)
+admin.site.register(Institute, InstituteAdmin)
