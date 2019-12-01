@@ -72,6 +72,7 @@ class BaseProcess(HackathonDictionary):
         verbose_name_plural = 'Шаблон процесса'
 
     parent_process = models.ForeignKey('BaseProcess', verbose_name='Родитель', blank=True, null=True, on_delete=models.PROTECT)
+    description = models.TextField("Описание процесса", null=True, blank=True, default='')
 
     def __str__(self):
         return self.name
@@ -90,7 +91,8 @@ class Process(HackathonBase):
     period = models.ForeignKey('Period', verbose_name='Период планирования', on_delete=models.SET_NULL, null=True, default=None)
     start_date = models.DateField(null=True, default=None)
     expiration_date = models.DateField(null=True, default=None)
-    law_base = models.TextField('Законное основание', null=False, blank=False)
+    law_base = models.TextField('Законное основание', null=False, blank=False) 
+    description = models.TextField("Описание процесса", null=True, blank=True, default='')   
 
     def __str__(self):
         return self.process.name
