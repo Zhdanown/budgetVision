@@ -19,6 +19,16 @@ from django.db.models import Q
 from .serializers import *
 from hackathon.models import *
 
+def get_nested_institutes(user):
+      set_institutes = set()
+      query_set = UserInstituntesView.queryset.filter(user=user)
+      for _ in query_set:
+          for institute in _.institutes.all():
+              while institute is not None:
+                  set_institutes.add(institute)
+                  institute = institute.founder
+      return list(set_institutes)
+
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 30
@@ -37,17 +47,25 @@ class DocumentTypeList(generics.ListAPIView):
     def get_queryset(self):
         return DocumentTypes.objects.all()
 
-class UserInstituntes(generics.RetrieveAPIView):
+class UserInstituntesView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = UserInstitutesSerializer
     lookup_field = 'user__pk'
     queryset = UserInstitutes.objects.all()
 
 
-class ProcessList(APIView):
+class ProcessListView(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
+    serializer_class = ProcessSerializer
+
+    def get_queryset(self):
+        institutes = get_nested_institutes(self.request.user)
+        processes = Process.objects.filter(Q(from_institute__in=institutes) | 
+                               Q(to_institute__in=institutes))
+        return processes
+       
 
 
+   
 
-    def get(self, request, format=None):
-        institutes = get_nested_institutes()
+        

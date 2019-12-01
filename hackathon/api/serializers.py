@@ -14,3 +14,8 @@ class UserInstitutesSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserInstitutes
         fields = '__all__'
+
+class ProcessSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Process
+        fields = '__all__'
