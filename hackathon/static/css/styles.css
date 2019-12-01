@@ -59,6 +59,7 @@
     color: white;
 }
 .sidepanel > div {
+    cursor: pointer;
     padding: .5rem;
     margin-bottom: .5rem;
 }
@@ -105,6 +106,9 @@
     margin-right: -34px;
 }
 
+.card {
+    cursor: pointer;
+}
 .card.danger::after {
     content: "!";
     display: inline-block;
