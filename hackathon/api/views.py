@@ -14,7 +14,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
 from django.urls import reverse
 from django.db.models import Q
-import requests
+#import requests
 
 from .serializers import *
 from hackathon.models import *
