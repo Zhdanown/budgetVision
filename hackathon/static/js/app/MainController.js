@@ -54,18 +54,30 @@ app.controller("MainController", function($scope, GetUser, Processes, Tasks) {
     }
   ];
 
+  // $scope.currentUser = GetUser.query()
+
+  $scope.processes = Processes.query();
+  
+    
   $scope.openCard = function (card) {
       $scope.selectedCard = card;
+      console.log(card)
   }
 
   /* Get User Organizations */
-  GetUser.get({ pk: 1 }, res => {
-    console.log(res);
-  })
+  // GetUser.get({ pk: 1 }, res => {
+  //   console.log(res);
+  // })
 
-  Processes.query({}, res => {
-    console.log(res);
-  })
+  // Processes.get({}, res => {
+  //   console.log(res);
+  // })
+
+  $scope.getDocumentsCount = function (doc_types) {
+    return doc_types.reduce((acc, doc_type) => {
+      return acc += doc_type.documents.length;
+    }, 0)
+  }
 
   console.log("main controller");
 });
