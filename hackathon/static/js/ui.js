@@ -6,6 +6,10 @@
     // // init tabs
     // var tabs = document.querySelectorAll('.tabs');
     // var tabInstances = M.Tabs.init(tabs, {});
+    
+    // init dropdown
+    var dropdown = document.querySelectorAll('.dropdown-trigger');
+    var dropdownInstances = M.Dropdown.init(dropdown, {coverTrigger: false});
 
   });
 
