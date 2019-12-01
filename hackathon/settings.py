@@ -146,3 +146,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'static')
 
 SITE_ID = 1
+
+ACCOUNT_LOGOUT_REDIRECT_URL ="/"
+ACCOUNT_LOGOUT_ON_GET = True

@@ -50,7 +50,7 @@ class Institute(HackathonDictionary):
         verbose_name = 'Организация'
         verbose_name_plural = 'Организации'
 
-    INSTITUTE_TYPE_CHOICES = [('BUDJET_INSTITUTE', 'Бюджетная организация'),
+    INSTITUTE_TYPE_CHOICES = [('BUDGET_INSTITUTE', 'Бюджетная организация'),
                              ('AUTONOMOUS_INSTITUTE', 'Автономная организация'),
                              ('PUBLIC_INSTITUTE', 'Казенное учреждение'),
                              ('GOVERNMENT_INSTITUTE', 'Государственное унитарное предприятие'),
