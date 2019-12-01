@@ -39,6 +39,7 @@ class Document(HackathonBase):
     creation_date = models.DateTimeField('Дата создания', null=True, blank=True)
     approval_date = models.DateTimeField('Дата утверждения', null=True, blank=True)
     institute = models.ForeignKey('Institute', on_delete=models.PROTECT, verbose_name='Организация')
+    to_institute = models.ForeignKey('Institute', verbose_name='Получатель', null=True, default=None, blank=True, on_delete=models.PROTECT,  related_name = 'document_institute_to')
 
     def __str__(self):
         return '%s (%s)' % (self.type.name, self.number)

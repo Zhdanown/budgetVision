@@ -1,16 +1,8 @@
 var app = angular.module('app', [
-    // 'ngResource',
-    // 'ngRoute',
-    // 'service', 
+    'ngResource',    
+    'service', 
     'main-ctrl',
     'ui.tree',
-
-    // 'drug-ctrl',
-    // 'ph-ctrl',
-    // 'mdn-ctrl',
-    // 'cart-ctrl',
-    // 'angular-uuid',
-    // 'ui.bootstrap'
 ]);
 
 app.config([
