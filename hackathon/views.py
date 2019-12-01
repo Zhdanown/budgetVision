@@ -9,6 +9,7 @@ from django.db.models import Q, Max, Count
 from django.db.models import Q, Max, Count
 
 
+@login_required(login_url='/accounts/login/')
 def home(request):
     assert isinstance(request, HttpRequest)
 
